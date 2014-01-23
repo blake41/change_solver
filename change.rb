@@ -15,15 +15,11 @@ class ChangeMaker
     return {0 => []} if amount == 0
     change = Hash.new {|h,k| h[k] = []}
     possible(amount).each do |coin|
-      change[amount] << ([coin] + make_change(amount - coin)[amount - coin])
+      change[amount] << [coin] + make_change(amount - coin)[amount - coin]
     end
     return change
   end
 
 end
 
-change = ChangeMaker.new.make_change(100)
-
-debugger
-
-puts 'hi'
+puts ChangeMaker.new.make_change(100).inspect
