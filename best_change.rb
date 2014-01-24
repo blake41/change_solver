@@ -12,30 +12,20 @@ class ChangeMaker
     end
   end
 
-  def make_change(amount)
-    if @cache[amount].size > 0
-      # debugger
-      # puts "returning #{@cache[amount]}"
-      return {amount => @cache[amount]}
-    end
+  def make_change(amount)    
+    return {amount => @cache[amount]} if @cache[amount].size > 0
     return {0 => []} if amount == 0
     change = Hash.new {|h,k| h[k] = []}
     possible(amount).each do |coin|
-      begin
-        solutions = make_change(amount - coin)[amount - coin]
-        if solutions.size > 0
-          solutions.each do |solution|
-            change[amount] << [coin] + solution
-          end
-        else
-          change[amount] << [coin]
+      solutions = make_change(amount - coin)[amount - coin]
+      if solutions.size > 0
+        solutions.each do |solution|
+          change[amount] << [coin] + solution
         end
-      rescue => e
-        debugger
-        puts 'hi'
+      else
+        change[amount] << [coin]
       end
     end
-    # debugger
     temp = [change[amount].sort {|solutiona, solutionb| solutiona.size <=> solutionb.size}.first]
     @cache[amount] = temp
     change[amount] = temp
