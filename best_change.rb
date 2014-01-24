@@ -1,8 +1,9 @@
 require 'debugger'
 class ChangeMaker
     
-  def initialize(coins = [50,25,10,5,1])
+  def initialize(coins = [20,10,5,2,1])
     @coins = coins.sort
+    @cache = Hash.new {|h,k| h[k] = []}
   end
 
   def possible(amount)
@@ -12,22 +13,35 @@ class ChangeMaker
   end
 
   def make_change(amount)
+    if @cache[amount].size > 0
+      # debugger
+      # puts "returning #{@cache[amount]}"
+      return {amount => @cache[amount]}
+    end
     return {0 => []} if amount == 0
     change = Hash.new {|h,k| h[k] = []}
     possible(amount).each do |coin|
-      solutions = make_change(amount - coin)[amount - coin]
-      if solutions.size > 0
-        solutions.each do |solution|
-          change[amount] << [coin] + solution
+      begin
+        solutions = make_change(amount - coin)[amount - coin]
+        if solutions.size > 0
+          solutions.each do |solution|
+            change[amount] << [coin] + solution
+          end
+        else
+          change[amount] << [coin]
         end
-      else
-        change[amount] << [coin]
+      rescue => e
+        debugger
+        puts 'hi'
       end
     end
-    change[amount] = [change[amount].sort {|solutiona, solutionb| solutiona.size <=> solutionb.size}.first]
+    # debugger
+    temp = [change[amount].sort {|solutiona, solutionb| solutiona.size <=> solutionb.size}.first]
+    @cache[amount] = temp
+    change[amount] = temp
     return change
   end
 
 end
 
-puts ChangeMaker.new.make_change(36).inspect
+puts ChangeMaker.new.make_change(301).inspect
