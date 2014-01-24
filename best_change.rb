@@ -24,9 +24,10 @@ class ChangeMaker
         change[amount] << [coin]
       end
     end
+    change[amount] = [change[amount].sort {|solutiona, solutionb| solutiona.size <=> solutionb.size}.first]
     return change
   end
 
 end
 
-puts ChangeMaker.new.make_change(12).inspect
+puts ChangeMaker.new.make_change(36).inspect
