@@ -62,6 +62,6 @@ class ChangeMaker
 
 end
 t1 = Time.now
-puts ChangeMaker.new.run(25).inspect
+puts ChangeMaker.new.run(51).inspect
 t2 = Time.now
 puts "it took #{t2 - t1} seconds to solve this"
