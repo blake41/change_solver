@@ -12,8 +12,16 @@ class ChangeMaker
     end
   end
 
-  def run(amount)
-    num_coins(make_change(amount, []))
+  def run(amount,find_best = true)
+    if find_best 
+      return  best(num_coins(make_change(amount, [])))
+    else
+      return num_coins(make_change(amount, []))
+    end
+  end
+
+  def best(solutions)
+    solutions.first
   end
 
   def num_coins(solutions)
