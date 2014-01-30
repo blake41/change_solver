@@ -1,20 +1,4 @@
 require 'debugger'
-class Array
-
-  def my_collect
-    to_return = []
-    if self.length == 1
-      to_return = yield self.first
-    elsif self.length > 1
-      to_return = self.collect do |element|
-        yield element
-      end
-    end
-    return to_return
-  end
-
-end
-
 class ChangeMaker
     
   def initialize(coins = [20,10,5,1])
