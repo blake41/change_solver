@@ -1,4 +1,3 @@
-require 'debugger'
 class ChangeMaker
     
   def initialize(coins = [25,10,5,1])
