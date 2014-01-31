@@ -1,9 +1,8 @@
 require 'debugger'
 class ChangeMaker
     
-  def initialize(coins = [20,10,5,1])
+  def initialize(coins = [25,10,5,1])
     @coins = coins.sort
-    @cache = Hash.new {|h,k| h[k] = []}
   end
 
   def possible(amount)
